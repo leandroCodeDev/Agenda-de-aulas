@@ -48,9 +48,14 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
+    public AlunoEntity getAlunoEntity(UUID idAluno) {
+        return alunoRepository.findById(idAluno).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+    }
+
+    @Override
     public List<AlunoDto> getAlunos() {
         return alunoRepository.findAll().stream()
-                .map(alunoEntity -> alunoEntity.toDto())
+                .map(AlunoEntity::toDto)
                 .collect(Collectors.toList());
     }
 }

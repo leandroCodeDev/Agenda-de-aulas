@@ -1,5 +1,6 @@
 package com.api.conectaProfessorAluno.entitys;
 
+import com.api.conectaProfessorAluno.dto.AgendaDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -46,5 +47,120 @@ public class AgendaEntity implements Serializable {
     @OneToMany(mappedBy = "agenda", cascade = CascadeType.REMOVE)
     private List<MaterialEntity> material;
 
+    public AgendaEntity(){}
+    public AgendaEntity(UUID id, String nome, String status, String tema, String descricao, Date dataAula) {
+        this.id = id;
+        this.nome = nome;
+        this.status = status;
+        this.tema = tema;
+        this.descricao = descricao;
+        this.dataAula = dataAula;
+    }
 
+    public AgendaEntity(AgendaDto agenda, AlunoEntity aluno, TutorEntity tutor){
+        this.nome = agenda.nome();
+        this.status = agenda.status();
+        this.tema = agenda.tema();
+        this.descricao = agenda.descricao();
+        this.dataAula = agenda.dataAula();
+        this.aluno = aluno;
+        this.tutor = tutor;
+    }
+
+    public AgendaEntity(UUID id, AgendaDto agenda, AlunoEntity aluno, TutorEntity tutor){
+        this.id = id;
+        this.nome = agenda.nome();
+        this.status = agenda.status();
+        this.tema = agenda.tema();
+        this.descricao = agenda.descricao();
+        this.dataAula = agenda.dataAula();
+        this.aluno = aluno;
+        this.tutor = tutor;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTema() {
+        return tema;
+    }
+
+    public void setTema(String tema) {
+        this.tema = tema;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Date getDataAula() {
+        return dataAula;
+    }
+
+    public void setDataAula(Date dataAula) {
+        this.dataAula = dataAula;
+    }
+
+    public AlunoEntity getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(AlunoEntity aluno) {
+        this.aluno = aluno;
+    }
+
+    public TutorEntity getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(TutorEntity tutor) {
+        this.tutor = tutor;
+    }
+
+    public List<MaterialEntity> getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(List<MaterialEntity> material) {
+        this.material = material;
+    }
+
+
+    public AgendaDto toDto() {
+        return new AgendaDto(
+                this.id,
+                this.status,
+                this.nome,
+                this.tema,
+                this.descricao,
+                this.dataAula,
+                tutor.getId(),
+                aluno.getId()
+                );
+    }
 }

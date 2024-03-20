@@ -1,6 +1,7 @@
 package com.api.conectaProfessorAluno.services;
 
 import com.api.conectaProfessorAluno.dto.AlunoDto;
+import com.api.conectaProfessorAluno.entitys.AlunoEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface AlunoService {
     public void delete(UUID idAluno);
     public AlunoDto getAluno(UUID idAluno);
     public List<AlunoDto> getAlunos();
+
+    AlunoEntity getAlunoEntity(UUID uuid);
 }

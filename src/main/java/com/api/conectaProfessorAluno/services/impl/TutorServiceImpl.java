@@ -49,10 +49,17 @@ public class TutorServiceImpl implements TutorService {
         return tutor.toDto();
     }
 
+
+    @Override
+    public TutorEntity getTutorEntity(UUID idTutor) {
+        return tutorRepository.findById(idTutor).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+    }
+
     @Override
     public List<TutorDto> getTutores() {
         return tutorRepository.findAll().stream()
-                .map(tutorEntity -> tutorEntity.toDto())
+                .map(TutorEntity::toDto)
                 .collect(Collectors.toList());
     }
+
 }
