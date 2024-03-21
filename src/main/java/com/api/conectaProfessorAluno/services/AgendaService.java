@@ -21,4 +21,8 @@ public interface AgendaService {
     public void delete(UUID idAgenda);
     public AgendaDto getAgenda(UUID idAgenda);
     public List<AgendaDto> getAgendas();
+
+    List<AgendaDto> getAlunosAgendas(UUID idAluno);
+
+    List<AgendaDto> getTutorAgendas(UUID idTutor);
 }

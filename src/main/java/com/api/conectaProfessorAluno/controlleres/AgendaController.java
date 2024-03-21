@@ -36,6 +36,17 @@ public class AgendaController {
         return ResponseEntity.status(HttpStatus.OK).body(agendas);
     }
 
+    @GetMapping("/alunos/{id}")
+    public ResponseEntity<List<AgendaDto>> getAlunosAgendas(@PathVariable(name = "id")UUID idAluno){
+        List<AgendaDto> agendas = agendaService.getAlunosAgendas(idAluno);
+        return ResponseEntity.status(HttpStatus.OK).body(agendas);
+    }
+    @GetMapping("/tutores/{id}")
+    public ResponseEntity<List<AgendaDto>> getTutorAgendas(@PathVariable(name = "id")UUID idTutor){
+        List<AgendaDto> agendas = agendaService.getTutorAgendas(idTutor);
+        return ResponseEntity.status(HttpStatus.OK).body(agendas);
+    }
+
 
 
     @PostMapping

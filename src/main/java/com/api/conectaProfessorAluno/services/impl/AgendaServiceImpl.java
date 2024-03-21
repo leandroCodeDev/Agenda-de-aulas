@@ -77,4 +77,26 @@ public class AgendaServiceImpl implements AgendaService {
                 .map(AgendaEntity::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<AgendaDto> getAlunosAgendas(UUID idAluno) {
+        return agendaRepository.findAgendasByTutorIdOrderByNomeAsc(idAluno).stream()
+                .map(this::mapToAgendaDto)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<AgendaDto> getTutorAgendas(UUID idTutor) {
+        List<AgendaEntity> agendas = agendaRepository.findAgendasByTutorIdOrderByNomeAsc(idTutor);
+
+        return agendaRepository.findAgendasByTutorIdOrderByNomeAsc(idTutor).stream()
+                .map(this::mapToAgendaDto)
+                .collect(Collectors.toList());
+    }
+
+    private AgendaDto mapToAgendaDto(AgendaEntity agenda) {
+
+        return new AgendaDto(agenda.getId(),agenda.getNome(),agenda.getStatus(),agenda.getTema(),agenda.getDescricao(),agenda.getDataAula(),agenda.getTutor().getId(),agenda.getAluno().getId());
+    }
 }
