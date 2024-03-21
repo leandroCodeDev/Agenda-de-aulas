@@ -70,6 +70,6 @@ public class MaterialEntity implements Serializable {
         return new MaterialDto(this.id,
         this.caminhoArquivo,
         this.urlArquivo,
-        this.agenda.getId());
+        this.agenda.toDto());
     }
 }

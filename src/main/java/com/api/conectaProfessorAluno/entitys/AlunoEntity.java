@@ -1,12 +1,16 @@
 package com.api.conectaProfessorAluno.entitys;
 
+import com.api.conectaProfessorAluno.dto.AgendaDto;
 import com.api.conectaProfessorAluno.dto.AlunoDto;
+import com.api.conectaProfessorAluno.dto.TutorDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "aluno")
@@ -20,9 +24,9 @@ public class AlunoEntity implements Serializable {
     @Column(columnDefinition = "varchar(255) not null")
     private String nome;
 
-    @JsonIgnoreProperties("aluno")
-    @OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE)
-    private List<AgendaEntity> agenda;
+    @JsonIgnoreProperties("agendas")
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<AgendaEntity> agendas;
 
 
     public AlunoEntity() {}
@@ -30,7 +34,7 @@ public class AlunoEntity implements Serializable {
     public AlunoEntity(UUID id, String nome, List<AgendaEntity> agenda) {
         this.id = id;
         this.nome = nome;
-        this.agenda = agenda;
+        this.agendas = agenda;
     }
 
     public AlunoEntity(UUID id, String nome) {
@@ -49,7 +53,7 @@ public class AlunoEntity implements Serializable {
     public AlunoEntity(AlunoDto aluno, List<AgendaEntity> agenda) {
         this.id = aluno.id();
         this.nome = aluno.nome();
-        this.agenda = agenda;
+        this.agendas = agenda;
     }
 
     public AlunoEntity(UUID id,AlunoDto aluno) {
@@ -60,7 +64,7 @@ public class AlunoEntity implements Serializable {
     public AlunoEntity(UUID id,AlunoDto aluno, List<AgendaEntity> agenda) {
         this.id = id;
         this.nome = aluno.nome();
-        this.agenda = agenda;
+        this.agendas = agenda;
     }
 
 
@@ -81,16 +85,31 @@ public class AlunoEntity implements Serializable {
         this.nome = nome;
     }
 
-    public List<AgendaEntity> getAgenda() {
-        return agenda;
+    public List<AgendaEntity> getAgendas() {
+        return agendas;
     }
 
-    public void setAgenda(List<AgendaEntity> agenda) {
-        this.agenda = agenda;
+    public void setAgendas(List<AgendaEntity> agendas) {
+        this.agendas = agendas;
     }
 
 
     public AlunoDto toDto() {
-        return new AlunoDto(getId(),getNome());
+        List<AgendaDto> agendaDtos = new ArrayList<>();
+        if (agendas != null) {
+            agendaDtos = agendas.stream()
+                    .map(this::mapToAgendaDto)
+                    .collect(Collectors.toList());
+        }
+        return new AlunoDto(getId(),getNome(),agendaDtos);
+    }
+
+    private AgendaDto mapToAgendaDto(AgendaEntity agenda) {
+
+        return agenda.toDtoCustomAluno();
+    }
+
+    public AlunoDto toDtoCustom() {
+        return new AlunoDto(getId(),getNome(),null);
     }
 }

@@ -2,9 +2,10 @@ package com.api.conectaProfessorAluno.dto;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-public record AgendaDto(UUID id, String nome, String status, String tema, String descricao, Date dataAula, UUID idTutor,UUID idAluno) {
+public record AgendaDto(UUID id, String nome, String status, String tema, String descricao, Date dataAula, TutorDto tutor,AlunoDto  aluno) {
     @Override
     public UUID id() {
         return id;
@@ -36,12 +37,12 @@ public record AgendaDto(UUID id, String nome, String status, String tema, String
     }
 
     @Override
-    public UUID idTutor() {
-        return idTutor;
+    public TutorDto tutor() {
+        return tutor;
     }
 
     @Override
-    public UUID idAluno() {
-        return idAluno;
+    public AlunoDto aluno() {
+        return aluno;
     }
 }

@@ -1,6 +1,7 @@
 package com.api.conectaProfessorAluno.entitys;
 
 import com.api.conectaProfessorAluno.dto.AgendaDto;
+import com.api.conectaProfessorAluno.dto.TutorDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -34,20 +35,22 @@ public class AgendaEntity implements Serializable {
     private Date dataAula;
 
     @JsonIgnoreProperties("aluno")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "idAluno", nullable = false)
     private AlunoEntity aluno;
 
     @JsonIgnoreProperties("tutor")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "idTutor", nullable = false)
     private TutorEntity tutor;
 
     @JsonIgnoreProperties("material")
-    @OneToMany(mappedBy = "agenda", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "agenda", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<MaterialEntity> material;
 
-    public AgendaEntity(){}
+    public AgendaEntity() {
+    }
+
     public AgendaEntity(UUID id, String nome, String status, String tema, String descricao, Date dataAula) {
         this.id = id;
         this.nome = nome;
@@ -57,7 +60,7 @@ public class AgendaEntity implements Serializable {
         this.dataAula = dataAula;
     }
 
-    public AgendaEntity(AgendaDto agenda, AlunoEntity aluno, TutorEntity tutor){
+    public AgendaEntity(AgendaDto agenda, AlunoEntity aluno, TutorEntity tutor) {
         this.nome = agenda.nome();
         this.status = agenda.status();
         this.tema = agenda.tema();
@@ -67,7 +70,7 @@ public class AgendaEntity implements Serializable {
         this.tutor = tutor;
     }
 
-    public AgendaEntity(UUID id, AgendaDto agenda, AlunoEntity aluno, TutorEntity tutor){
+    public AgendaEntity(UUID id, AgendaDto agenda, AlunoEntity aluno, TutorEntity tutor) {
         this.id = id;
         this.nome = agenda.nome();
         this.status = agenda.status();
@@ -159,8 +162,34 @@ public class AgendaEntity implements Serializable {
                 this.tema,
                 this.descricao,
                 this.dataAula,
-                tutor.getId(),
-                aluno.getId()
-                );
+                this.tutor.toDtoCustom(),
+                this.aluno.toDtoCustom()
+        );
+    }
+
+    public AgendaDto toDtoCustomAluno() {
+        return new AgendaDto(
+                this.id,
+                this.status,
+                this.nome,
+                this.tema,
+                this.descricao,
+                this.dataAula,
+                this.tutor.toDtoCustom(),
+                null
+        );
+    }
+
+    public AgendaDto toDtoCustomTutor() {
+        return new AgendaDto(
+                this.id,
+                this.status,
+                this.nome,
+                this.tema,
+                this.descricao,
+                this.dataAula,
+                null,
+                this.aluno.toDtoCustom()
+        );
     }
 }

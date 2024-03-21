@@ -1,6 +1,7 @@
 package com.api.conectaProfessorAluno.services.impl;
 
 import com.api.conectaProfessorAluno.dto.AgendaDto;
+import com.api.conectaProfessorAluno.dto.TutorDto;
 import com.api.conectaProfessorAluno.entitys.AgendaEntity;
 import com.api.conectaProfessorAluno.entitys.AlunoEntity;
 import com.api.conectaProfessorAluno.entitys.TutorEntity;
@@ -40,8 +41,8 @@ public class AgendaServiceImpl implements AgendaService {
 
     @Override
     public AgendaDto create(AgendaDto agenda) {
-        AlunoEntity aluno = alunoService.getAlunoEntity(agenda.idAluno());
-        TutorEntity tutor = tutorService.getTutorEntity(agenda.idTutor());
+        AlunoEntity aluno = alunoService.getAlunoEntity(agenda.aluno().id());
+        TutorEntity tutor = tutorService.getTutorEntity(agenda.tutor().id());
         AgendaEntity agendaEntity = new AgendaEntity(agenda,aluno,tutor);
         agendaEntity = agendaRepository.save(agendaEntity);
         return agendaEntity.toDto();
@@ -111,7 +112,8 @@ public class AgendaServiceImpl implements AgendaService {
 
 
     private AgendaDto mapToAgendaDto(AgendaEntity agenda) {
-
-        return new AgendaDto(agenda.getId(),agenda.getNome(),agenda.getStatus(),agenda.getTema(),agenda.getDescricao(),agenda.getDataAula(),agenda.getTutor().getId(),agenda.getAluno().getId());
+        return agenda.toDto();
     }
+
+
 }

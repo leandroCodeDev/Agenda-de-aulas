@@ -41,7 +41,7 @@ public class MaterialServiceImpl implements MaterialService {
     public MaterialDto create(MaterialDto material) {
         MaterialEntity materialEntity = new MaterialEntity();
         BeanUtils.copyProperties(material,materialEntity);
-        AgendaEntity agenda = agendaService.getAgendaEntity(material.idAgenda());
+        AgendaEntity agenda = agendaService.getAgendaEntity(material.agenda().id());
         materialEntity.setAgenda(agenda);
         materialEntity = materialRepository.save(materialEntity);
         return materialEntity.toDto();
