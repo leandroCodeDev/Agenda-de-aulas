@@ -1,5 +1,5 @@
 
-# Sistema de Plataforma de Tutoria Online
+# API de uma Plataforma de Tutoria Online
 
 
 ## Introdução
