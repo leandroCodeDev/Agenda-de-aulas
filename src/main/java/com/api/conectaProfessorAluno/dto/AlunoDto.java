@@ -20,3 +20,5 @@ public record AlunoDto(UUID id, String nome, List<AgendaDto> agendas) {
         return agendas;
     }
 }
+
+

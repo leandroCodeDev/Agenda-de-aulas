@@ -32,7 +32,7 @@ public class TutorServiceImpl implements TutorService {
 
     @Override
     public TutorDto update(UUID idTutor,TutorDto tutor) {
-        TutorEntity tutorEntity = tutorRepository.findById(idTutor).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
+        TutorEntity tutorEntity = tutorRepository.findById(idTutor).orElseThrow(() -> new BadRequestException("Tutor não enocntrado"));
         BeansHelper.copyNonNullProperties(tutor,tutorEntity);
         tutorRepository.save(tutorEntity);
         return tutorEntity.toDto();
@@ -40,20 +40,20 @@ public class TutorServiceImpl implements TutorService {
 
     @Override
     public void delete(UUID idTutor) {
-        TutorEntity tutor = tutorRepository.findById(idTutor).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
+        TutorEntity tutor = tutorRepository.findById(idTutor).orElseThrow(() -> new BadRequestException("Tutor não enocntrado"));
         tutorRepository.delete(tutor);
     }
 
     @Override
     public TutorDto getTutor(UUID idTutor) {
-        TutorEntity tutor = tutorRepository.findById(idTutor).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
+        TutorEntity tutor = tutorRepository.findById(idTutor).orElseThrow(() -> new BadRequestException("Tutor não enocntrado"));
         return tutor.toDto();
     }
 
 
     @Override
     public TutorEntity getTutorEntity(UUID idTutor) {
-        return tutorRepository.findById(idTutor).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
+        return tutorRepository.findById(idTutor).orElseThrow(() -> new BadRequestException("Tutor não enocntrado"));
     }
 
     @Override
