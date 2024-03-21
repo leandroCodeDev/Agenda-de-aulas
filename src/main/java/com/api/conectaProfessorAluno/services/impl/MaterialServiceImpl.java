@@ -5,6 +5,7 @@ import com.api.conectaProfessorAluno.entitys.AgendaEntity;
 import com.api.conectaProfessorAluno.entitys.MaterialEntity;
 import com.api.conectaProfessorAluno.entitys.AlunoEntity;
 import com.api.conectaProfessorAluno.entitys.TutorEntity;
+import com.api.conectaProfessorAluno.exceptions.errors.BadRequestException;
 import com.api.conectaProfessorAluno.helpers.BeansHelper;
 import com.api.conectaProfessorAluno.repositories.MaterialRepository;
 import com.api.conectaProfessorAluno.services.AgendaService;
@@ -48,7 +49,7 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public MaterialDto update(UUID idMaterial,MaterialDto material) {
-        MaterialEntity materialEntity = materialRepository.findById(idMaterial).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        MaterialEntity materialEntity = materialRepository.findById(idMaterial).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         BeansHelper.copyNonNullProperties(material,materialEntity);
         materialRepository.save(materialEntity);
         return materialEntity.toDto();
@@ -56,13 +57,13 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public void delete(UUID idMaterial) {
-        MaterialEntity material = materialRepository.findById(idMaterial).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        MaterialEntity material = materialRepository.findById(idMaterial).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         materialRepository.delete(material);
     }
 
     @Override
     public MaterialDto getMaterial(UUID idMaterial) {
-        MaterialEntity material = materialRepository.findById(idMaterial).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        MaterialEntity material = materialRepository.findById(idMaterial).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         return material.toDto();
     }
 

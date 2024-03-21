@@ -77,7 +77,7 @@ public class AgendaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable(name = "id") UUID  id){
         agendaService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Agenda removido com sucesso.");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

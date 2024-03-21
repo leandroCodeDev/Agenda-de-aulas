@@ -55,7 +55,7 @@ public class MaterialController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable(name = "id") UUID  id){
         materialService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Material removido com sucesso.");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

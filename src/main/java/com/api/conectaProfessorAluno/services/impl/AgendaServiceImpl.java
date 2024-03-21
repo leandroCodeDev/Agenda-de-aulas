@@ -4,6 +4,7 @@ import com.api.conectaProfessorAluno.dto.AgendaDto;
 import com.api.conectaProfessorAluno.entitys.AgendaEntity;
 import com.api.conectaProfessorAluno.entitys.AlunoEntity;
 import com.api.conectaProfessorAluno.entitys.TutorEntity;
+import com.api.conectaProfessorAluno.exceptions.errors.BadRequestException;
 import com.api.conectaProfessorAluno.helpers.BeansHelper;
 import com.api.conectaProfessorAluno.repositories.AgendaRepository;
 import com.api.conectaProfessorAluno.services.AgendaService;
@@ -48,7 +49,7 @@ public class AgendaServiceImpl implements AgendaService {
 
     @Override
     public AgendaDto update(UUID idAgenda,AgendaDto agenda) {
-        AgendaEntity agendaEntity = agendaRepository.findById(idAgenda).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        AgendaEntity agendaEntity = agendaRepository.findById(idAgenda).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         BeansHelper.copyNonNullProperties(agenda,agendaEntity);
         agendaRepository.save(agendaEntity);
         return agendaEntity.toDto();
@@ -56,20 +57,20 @@ public class AgendaServiceImpl implements AgendaService {
 
     @Override
     public void delete(UUID idAgenda) {
-        AgendaEntity agenda = agendaRepository.findById(idAgenda).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        AgendaEntity agenda = agendaRepository.findById(idAgenda).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         agendaRepository.delete(agenda);
     }
 
     @Override
     public AgendaDto getAgenda(UUID idAgenda) {
-        AgendaEntity agenda = agendaRepository.findById(idAgenda).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        AgendaEntity agenda = agendaRepository.findById(idAgenda).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         return agenda.toDto();
     }
 
 
     @Override
     public AgendaEntity getAgendaEntity(UUID idAgenda) {
-        return agendaRepository.findById(idAgenda).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        return agendaRepository.findById(idAgenda).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
     }
     @Override
     public List<AgendaDto> getAgendas() {

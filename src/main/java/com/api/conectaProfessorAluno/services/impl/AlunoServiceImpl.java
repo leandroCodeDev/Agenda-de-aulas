@@ -2,6 +2,7 @@ package com.api.conectaProfessorAluno.services.impl;
 
 import com.api.conectaProfessorAluno.dto.AlunoDto;
 import com.api.conectaProfessorAluno.entitys.AlunoEntity;
+import com.api.conectaProfessorAluno.exceptions.errors.BadRequestException;
 import com.api.conectaProfessorAluno.repositories.AlunoRepository;
 import com.api.conectaProfessorAluno.services.AlunoService;
 import org.springframework.beans.BeanUtils;
@@ -30,26 +31,26 @@ public class AlunoServiceImpl implements AlunoService {
 
     @Override
     public AlunoDto update(UUID idAluno,AlunoDto aluno) {
-        alunoRepository.findById(idAluno).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        alunoRepository.findById(idAluno).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         AlunoEntity alunoEntity = alunoRepository.save(new AlunoEntity(idAluno, aluno));
         return alunoEntity.toDto();
     }
 
     @Override
     public void delete(UUID idAluno) {
-        AlunoEntity aluno = alunoRepository.findById(idAluno).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        AlunoEntity aluno = alunoRepository.findById(idAluno).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         alunoRepository.delete(aluno);
     }
 
     @Override
     public AlunoDto getAluno(UUID idAluno) {
-        AlunoEntity aluno = alunoRepository.findById(idAluno).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        AlunoEntity aluno = alunoRepository.findById(idAluno).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
         return aluno.toDto();
     }
 
     @Override
     public AlunoEntity getAlunoEntity(UUID idAluno) {
-        return alunoRepository.findById(idAluno).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+        return alunoRepository.findById(idAluno).orElseThrow(() -> new BadRequestException("Objeto não enocntrado"));
     }
 
     @Override
