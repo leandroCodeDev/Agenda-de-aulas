@@ -25,4 +25,8 @@ public interface AgendaService {
     List<AgendaDto> getAlunosAgendas(UUID idAluno);
 
     List<AgendaDto> getTutorAgendas(UUID idTutor);
+
+    List<AgendaDto> getAlunosProximasAgendas(UUID idAluno);
+
+    List<AgendaDto> getTutorProximasAgendas(UUID idTutor);
 }

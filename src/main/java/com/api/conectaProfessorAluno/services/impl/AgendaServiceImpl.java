@@ -9,9 +9,9 @@ import com.api.conectaProfessorAluno.repositories.AgendaRepository;
 import com.api.conectaProfessorAluno.services.AgendaService;
 import com.api.conectaProfessorAluno.services.AlunoService;
 import com.api.conectaProfessorAluno.services.TutorService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -80,7 +80,7 @@ public class AgendaServiceImpl implements AgendaService {
 
     @Override
     public List<AgendaDto> getAlunosAgendas(UUID idAluno) {
-        return agendaRepository.findAgendasByTutorIdOrderByNomeAsc(idAluno).stream()
+        return agendaRepository.findAgendasByAlunoIdOrderByDataAulaAsc(idAluno).stream()
                 .map(this::mapToAgendaDto)
                 .collect(Collectors.toList());
 
@@ -88,12 +88,26 @@ public class AgendaServiceImpl implements AgendaService {
 
     @Override
     public List<AgendaDto> getTutorAgendas(UUID idTutor) {
-        List<AgendaEntity> agendas = agendaRepository.findAgendasByTutorIdOrderByNomeAsc(idTutor);
-
-        return agendaRepository.findAgendasByTutorIdOrderByNomeAsc(idTutor).stream()
+        return agendaRepository.findAgendasByTutorIdOrderByDataAulaAsc(idTutor).stream()
                 .map(this::mapToAgendaDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<AgendaDto> getAlunosProximasAgendas(UUID idAluno) {
+        return agendaRepository.findAgendasByAlunoIdAndDataAulaGreaterThanEqualOrderByDataAulaAsc(idAluno, new Date()).stream()
+                .map(this::mapToAgendaDto)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<AgendaDto> getTutorProximasAgendas(UUID idTutor) {
+        return agendaRepository.findAgendasByTutorIdAndDataAulaGreaterThanEqualOrderByDataAulaAsc(idTutor, new Date()).stream()
+                .map(this::mapToAgendaDto)
+                .collect(Collectors.toList());
+    }
+
 
     private AgendaDto mapToAgendaDto(AgendaEntity agenda) {
 

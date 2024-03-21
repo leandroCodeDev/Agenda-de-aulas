@@ -30,7 +30,7 @@ public class AgendaEntity implements Serializable {
     private String descricao;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_aluna", columnDefinition = "TIMESTAMP")
+    @Column(name = "data_aula", columnDefinition = "TIMESTAMP")
     private Date dataAula;
 
     @JsonIgnoreProperties("aluno")
