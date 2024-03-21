@@ -1,6 +1,7 @@
 package com.api.conectaProfessorAluno.services;
 
 import com.api.conectaProfessorAluno.dto.AgendaDto;
+import com.api.conectaProfessorAluno.entitys.AgendaEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface AgendaService {
     public AgendaDto create(AgendaDto tutor);
     public AgendaDto update(UUID idAgenda,AgendaDto tutor);
 
-
+    public AgendaEntity getAgendaEntity(UUID idAgenda);
     public void delete(UUID idAgenda);
     public AgendaDto getAgenda(UUID idAgenda);
     public List<AgendaDto> getAgendas();

@@ -66,6 +66,11 @@ public class AgendaServiceImpl implements AgendaService {
         return agenda.toDto();
     }
 
+
+    @Override
+    public AgendaEntity getAgendaEntity(UUID idAgenda) {
+        return agendaRepository.findById(idAgenda).orElseThrow(() -> new RuntimeException("Objeto não enocntrado"));
+    }
     @Override
     public List<AgendaDto> getAgendas() {
         return agendaRepository.findAll().stream()
